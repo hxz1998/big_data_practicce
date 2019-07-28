@@ -3,15 +3,14 @@
  Created by Monkey at 2019/7/26
  该程序根据下载好的HTML文档，对公司名称、公司地址进行提取和存储，存储格式为：
     {
-        "company_id":"5",
-        "data":{
-            "name":"北京市博望电力科贸发展公司",
-            "addr":"北京市西城区复外地藏庵南巷1号"
-        }
-    },
+        "name":string,      // 公司名称
+        "addr":string,      // 公司地址
+        "geog":[int, int]   //[经度(longitude), 维度(latitude)]
+    }
     2019年7月26日：解析功能基本完成
     2019年7月27日：解析完屏幕暂停
     2019年7月27日：解析完之后，转换为经纬度
+    2019年7月28日：修改解析后的存储格式
 """
 
 import json
@@ -21,7 +20,7 @@ from pathlib import Path
 from addr_to_geog import convert
 import time
 
-VERSION = 1.5
+VERSION = 1.6
 
 
 def company_name_addr(html_str):
@@ -112,14 +111,15 @@ if __name__ == '__main__':
     print('正在解析...\n')
     for offset in range(start_index, end_index + 1):
         tmp_data = resolver(filenames[offset - start_file_index])
+        geog_data = convert(tmp_data['addr'], ak)
         data = None
         try:
             data = {
                 "name": tmp_data['name'],
                 "addr": tmp_data['addr'],
-                "geog": convert(tmp_data['addr'], ak)
+                "geog": [geog_data['lng'], geog_data['lat']]
             }
-            if data['geog']['lat'] == -1:
+            if data['geog'][0] == -1:
                 print('配额已经用完，进行存储...')
                 break
             time.sleep(0.04)
