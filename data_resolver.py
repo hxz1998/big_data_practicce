@@ -20,7 +20,7 @@ from pathlib import Path
 from addr_to_geog import convert
 import time
 
-VERSION = 1.6
+VERSION = 1.7
 
 
 def company_name_addr(html_str):
@@ -111,9 +111,9 @@ if __name__ == '__main__':
     print('正在解析...\n')
     for offset in range(start_index, end_index + 1):
         tmp_data = resolver(filenames[offset - start_file_index])
-        geog_data = convert(tmp_data['addr'], ak)
         data = None
         try:
+            geog_data = convert(tmp_data['addr'], ak)
             data = {
                 "name": tmp_data['name'],
                 "addr": tmp_data['addr'],
