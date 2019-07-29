@@ -16,9 +16,9 @@
 import json
 import re
 import os
-from pathlib import Path
 from addr_to_geog import convert
 import time
+from dataset_scanner import dataset_scanner
 
 VERSION = 1.7
 
@@ -52,23 +52,13 @@ def resolver(filename):
     }
 
 
-def dataset_scanner(path):
-    """扫描指定目录下的HTML文件"""
-    path = Path(path)
-    files = []
-    if path.is_dir():
-        for item in path.iterdir():
-            files.append(str(item))
-    return files
-
-
 def json_writer(data, filename):
     """将JSON数据写入到指定文件中"""
-    if not os.path.exists('./data'):
+    if not os.path.exists('./data_'):
         print('数据路径文件夹不存在，正在创建...')
-        os.mkdir('./data/')
+        os.mkdir('./data_/')
         print('数据路径文件夹创建完成')
-    with open('./data/' + filename, 'w+', encoding='utf-8') as f:
+    with open('./data_/' + filename, 'w+', encoding='utf-8') as f:
         f.write(data)
 
 
@@ -130,7 +120,7 @@ if __name__ == '__main__':
         if size >= max_size:
             times = times + 1
             dataset = json.dumps(dataset, ensure_ascii=False)
-            data_filename = 'data-companies-json-{}-{}.txt'.format(start_index + (times - 1) * max_size,
+            data_filename = 'data_-companies-json-{}-{}.txt'.format(start_index + (times - 1) * max_size,
                                                                    start_index + (times - 1) * max_size + size - 1)
             print('写入数据文件' + data_filename)
             json_writer(dataset, data_filename)
@@ -142,8 +132,8 @@ if __name__ == '__main__':
         times = times + 1
         length = len(dataset)
         dataset = json.dumps(dataset, ensure_ascii=False)
-        data_filename = 'data-companies-json-{}-{}.txt'.format(start_index + (times - 1) * max_size,
+        data_filename = 'data_-companies-json-{}-{}.txt'.format(start_index + (times - 1) * max_size,
                                                                start_index + (times - 1) * max_size + size - 1)
         json_writer(dataset, data_filename)
 
-    input('数据解析完成，目录为：./data/')
+    input('数据解析完成，目录为：./data_/')

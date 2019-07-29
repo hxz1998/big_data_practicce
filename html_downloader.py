@@ -49,7 +49,7 @@ if __name__ == '__main__':
             if offset % 100 == 0:
                 print('数据已经下载到了{}'.format(offset))
             html_downloader('https://jobs.51job.com/all/co{}.html'.format(offset),
-                            './html/data-html-{}.html'.format(offset))
+                            './html/data_-html-{}.html'.format(offset))
             offset = offset + 1
         except Exception:
             print('下载中断在了第{}个数据，正在恢复连接...'.format(offset))

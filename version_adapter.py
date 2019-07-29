@@ -30,7 +30,7 @@ if __name__ == '__main__':
     数据文件会进行覆盖！
     """ % (VERSION))
 
-    files = dataset_scanner('./data/')
+    files = dataset_scanner('./data_/')
 
     print('扫描到共计 {} 个数据文件，开始进行转换...'.format(len(files)))
 
@@ -43,6 +43,7 @@ if __name__ == '__main__':
                     item = convert1_5_1_6(item_tmp)
                     result.append(item)
                 except:
+                    result.append(None)
                     continue
         with open(file, 'w', encoding='utf-8') as f:
             f.write(json.dumps(result, ensure_ascii=False))
