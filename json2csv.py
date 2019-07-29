@@ -23,11 +23,11 @@ if __name__ == '__main__':
     # files = dataset_scanner('../data/')
     files = dataset_scanner('./data/')
     result_tooooooooo_big = ''
-    data_filename = 'data_toooooooo_big_330W-418W.csv'
+    data_filename = 'data_toooooooo_big.csv'
     # 仅限本人自己用
     # start_index = 3400000
 
-    start_index = input('文件编号起始于：>(1-557W) ')
+    start_index = int(input('文件编号起始于：>(1-557W) '))
     times = 0
 
     """
